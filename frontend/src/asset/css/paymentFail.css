@@ -1,0 +1,43 @@
+.title{
+    margin-top: 5vh;
+}
+
+.title .mid{
+    color: #C44569;
+    font-size: 30px;
+    font-weight: bold;
+}
+
+.title hr{
+    color: #C44569;
+    height: 10px;
+}
+
+.title .right-side hr, .title .left-side hr{
+    margin-top:50px;
+    border: 12px;
+}
+
+.content div{
+    margin-top: 6vh;
+}
+
+.content img{
+    position: relative;
+    height: 200px;
+    width: 440px;
+    margin-top: 7vh;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.thank-you div{
+    text-align: center;
+    position: relative;
+    top: 7vh;
+    left: 50%;
+    transform: translateX(-50%);
+    color: #C44569;
+    font-size: 28px;
+    font-weight: bold;
+}
