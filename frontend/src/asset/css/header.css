@@ -1,0 +1,35 @@
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+.navbar{
+    background-color: #C44569;
+    color: white!important;
+}
+
+.navbar .navbar-brand{
+    color: white!important;
+}
+
+.navbar .navbar-nav .nav-link{
+    color: white!important;
+}
+
+.navbar .right-nav{
+    width: 50%;
+}
+
+.navbar .nav-search{
+    width: 50%;
+}
+
+.navbar .right-nav .btn{
+    color: white;
+    stroke: white;
+    border-color: white;
+    margin-right: 0.5vw;
+}
+
+
