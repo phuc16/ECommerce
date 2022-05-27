@@ -9,7 +9,7 @@ exports.payment = (request, response) => {
     var requestId = partnerCode + new Date().getTime();
     var orderId = requestId;
     var orderInfo = "pay with MoMo";
-    var redirectUrl = "https://www.momo.return";
+    var redirectUrl = "http://localhost:3000/complete";
     var ipnUrl = "https://callback.url/notify";
     var requestType = "captureWallet";
     var extraData = ""; //pass empty value if your merchant does not have stores
