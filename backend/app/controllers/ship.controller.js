@@ -1,6 +1,9 @@
 //API ref: https://api.ghn.vn/home/docs/detail?id=63
 
 const hostname = "dev-online-gateway.ghn.vn";
+const token = process.env.GHN_TOKEN;
+const shopID = process.env.GHN_SHOPID;
+
 
 exports.shipment = (request, response) => {    
     //Chame item list structure
@@ -22,10 +25,9 @@ exports.shipment = (request, response) => {
     
     console.log(itemList);
     
-    
     createShipment(
     request.body.name, request.body.phone,
-    request.body.address, "510101" , "1566" ,
+    request.body.address, request.body.ward , request.body.dist,
     2000, 20, 20, 20,
     itemList
     )
@@ -42,8 +44,6 @@ const createShipment = (
         itemList
     ) => {
     const endpoint = "/shiip/public-api/v2/shipping-order/create";
-    const token = process.env.GHN_TOKEN;
-    const shopID = process.env.GHN_SHOPID;
     
     const https = require("https");
     const options = {

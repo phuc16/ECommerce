@@ -10,7 +10,10 @@ const initialFValues = {
     name: '',
     phone: '',
     email: '',
-    address: ''
+    address: '',
+    ward: '',
+    dist: '',
+    province: '',
 }
 
 function Bill(props) {
@@ -50,13 +53,16 @@ function Bill(props) {
         }
         
         //Create shipment on GHN
-        console.log("CONNECT TO SERVER");
-        console.log(values);
+        //console.log("CONNECT TO SERVER");
+        //console.log(values);
         axios
             .post('http://localhost:5000/ship', {
               name: values.name,
               phone: values.phone,
               address: values.address,
+              ward: values.ward,
+              dist: values.dist,
+              province: values.province,
               itemList: Object.keys(listItem).map((key, index) => {return listItem[key];})
           })
             .then((res) => {
@@ -158,58 +164,71 @@ export default function Payment(){
     const [values, setValues] = useState(initialFValues);
 
     const [provinces, setProvinces] = useState([])
-    const [provinceSelect, setProvinceSelect] = useState('0')
+    const [provinceSelect, setProvinceSelect] = useState(0)
 
     const [districts, setDistricts] = useState([])
-    const [districtSelect, setDistrictSelect] = useState('0')
+    const [districtSelect, setDistrictSelect] = useState(0)
 
     const [communes, setCommunes] = useState([])
-    const [communeSelect, setCommuneSelect] = useState('0')
-
-    
+    const [communeSelect, setCommuneSelect] = useState(0)
 
     useEffect(() => {
         const fetAPIProvince = async () => {
-            axios.get(`https://api.mysupership.vn/v1/partner/areas/province`).then(res => {
-                setProvinces(res.data.results)
+            const url = 'https://dev-online-gateway.ghn.vn/shiip/public-api/master-data/province';
+            const tokenS = 'db9cc4ff-de42-11ec-ac64-422c37c6de1b'
+            axios.get(url, { headers: { token: tokenS} }).then(res => {
+                setProvinces(res.data.data)
             })
-            if (provinceSelect !== '0') {
-                await axios.get(`https://api.mysupership.vn/v1/partner/areas/district?province=${provinceSelect}`).then(res => {
-                    setDistricts(res.data.results)
+            if (provinceSelect !== 0) {
+                var urlD = `https://dev-online-gateway.ghn.vn/shiip/public-api/master-data/district?province_id=${provinceSelect}`
+                console.log(provinceSelect)
+                await axios.get(urlD, { headers: { token: tokenS} }).then(res => {
+                    
+                    setDistricts(res.data.data)  
+                    
                 })
             }
-            if (districtSelect !== '0') {
-                await axios.get(`https://api.mysupership.vn/v1/partner/areas/commune?district=${districtSelect}`).then(res => {
-                    setCommunes(res.data.results)
+            if (districtSelect !== 0) {
+                var urlC = `https://dev-online-gateway.ghn.vn/shiip/public-api/master-data/ward?district_id=${districtSelect}`
+                await axios.get(urlC, { headers: {token: tokenS}}).then(res => {
+                    setCommunes(res.data.data)
+                    console.log(res.data.data)
                 })
             }
         }
         fetAPIProvince()
     }, [])
+
     const handleChangeProvince = async (e) => {
+        values.province = e.target.value;
+        const tokenS = 'db9cc4ff-de42-11ec-ac64-422c37c6de1b'
         setProvinceSelect(e.target.value)
-        if (e.target.value === '0') {
+        if (e.target.value === 0) {
             setDistricts([])
             setCommunes([])
         } else {
-            await axios.get(`https://api.mysupership.vn/v1/partner/areas/district?province=${e.target.value}`).then(res => {
-                setDistricts(res.data.results)
+            await axios.get(`https://dev-online-gateway.ghn.vn/shiip/public-api/master-data/district?province_id=${e.target.value}`, { headers: { token: tokenS} }).then(res => {
+                setDistricts(res.data.data)
             })
         }
-        setDistrictSelect('0')
-        setCommuneSelect('0')
+        setDistrictSelect(0)
+        setCommuneSelect(0)
     }
 
     const handleChangeDistrict = async (e) => {
+        values.dist = e.target.value;
+        const tokenS = 'db9cc4ff-de42-11ec-ac64-422c37c6de1b'
+        
         setDistrictSelect(e.target.value)
-        if (e.target.value === '0') {
+        console.log('1' + districtSelect)
+        if (e.target.value === 0) {
             setCommunes([])
         } else {
-            await axios.get(`https://api.mysupership.vn/v1/partner/areas/commune?district=${e.target.value}`).then(res => {
-                setCommunes(res.data.results)
+            await axios.get(`https://dev-online-gateway.ghn.vn/shiip/public-api/master-data/ward?district_id=${e.target.value}`, { headers: { token: tokenS} }).then(res => {
+                setCommunes(res.data.data)
             })
         }
-        setCommuneSelect('0')
+        setCommuneSelect(0)
     }
 
     const handleChange = e => {
@@ -222,7 +241,7 @@ export default function Payment(){
     }
 
     const handleChangeCommune = (e) => {
-
+        values.ward = e.target.value;
         setCommuneSelect(e.target.value)
     }
 
@@ -334,8 +353,8 @@ export default function Payment(){
                                                     --Chọn Tỉnh/TP--
                                                 </option>
                                                 {provinces.map((province, index) => (
-                                                    <option key={index} value={province.code}>
-                                                        {province.name}
+                                                    <option key={index} value={province.ProvinceID}>
+                                                        {province.ProvinceName}
                                                     </option>
                                                 ))}
 
@@ -361,8 +380,8 @@ export default function Payment(){
                                                     --Chọn Quận/Huyện--
                                                 </option>
                                                 {districts.map((district, index) => (
-                                                    <option key={index} value={district.code}>
-                                                        {district.name}
+                                                    <option key={index} value={district.DistrictID}>
+                                                        {district.DistrictName}
                                                     </option>
                                                 ))}
                                             </TextField>
@@ -385,8 +404,8 @@ export default function Payment(){
                                                     --Chọn Xã/Phường--
                                                 </option>
                                                 {communes.map((commune, index) => (
-                                                    <option key={index} value={commune.code}>
-                                                        {commune.name}
+                                                    <option key={index} value={commune.WardCode}>
+                                                        {commune.WardName}
                                                     </option>
                                                 ))}
                                             </TextField>
