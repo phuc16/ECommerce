@@ -8,5 +8,5 @@ router.post('/', email.sendMail)
 // recivers: list of recivers
 // subject: subject
 // content: content
-// attachments: attachments: [{filename, path: file in assets}]
+// attachments: attachments: [{filename(optional), path: file in assets}]
 module.exports = router;

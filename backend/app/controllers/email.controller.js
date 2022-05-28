@@ -12,6 +12,7 @@ myOAuth2Client.setCredentials({
     refresh_token: process.env.OAUTH_REFRESH_TOKEN
 })
 
+
 exports.sendMail = async (req, res) => {
     try {
         if (!req.body.recivers || !req.body.subject || !req.body.content) 
