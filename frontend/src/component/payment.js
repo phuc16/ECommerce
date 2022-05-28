@@ -6,18 +6,25 @@ import React, { useState, useEffect, useRef} from "react";
 import {TextField } from "@mui/material";
 // import { useNavigate } from "react-router-dom";
 
+const initialFValues = {
+    name: '',
+    phone: '',
+    email: '',
+    address: ''
+}
+
 function Bill(props) {
-    // const navigate = useNavigate();
+    const { method, values } = props;
     const listItem = {
         1: {
             name: 'Sunflower',
-            price: 500,
+            price: 0,
             size: 'large',
             amount: 2
         },
         2: {
             name: 'Rose',
-            price: 600,
+            price: 400,
             size: 'medium',
             amount: 3
         }
@@ -33,6 +40,14 @@ function Bill(props) {
                 // navigate(res.data);
                 window.location.replace(res.data);
             });
+        // console.log(values)
+        for (const i in values){    
+            // console.log(i + '=' + values[i] + ';' + expires + ";path=/complete";)
+            const d = new Date();
+            d.setTime(d.getTime() + (30 * 24 * 60 * 60 * 1000));
+            let expires = "expires=" + d.toUTCString();
+            document.cookie = i + '=' + values[i] + ';' + expires + ";path=/complete";
+        }
     }
 
     var total = 0;
@@ -101,7 +116,7 @@ function Bill(props) {
                 </Row>
                 <Row className="mb-2 btn-row">
                     {
-                        props.method === 'momo' ? 
+                        method === 'momo' ? 
                             <Button variant="none" type="submit" onClick={(e) => onPayment(e) } >
                                 HOÀN TẤT ĐẶT HÀNG
                             </Button>
@@ -114,7 +129,6 @@ function Bill(props) {
                 </Row>
 
             </Container>
-            
 
         </div>
     )
@@ -126,6 +140,7 @@ export default function Payment(){
     const communeRef = useRef()
 
     
+    const [values, setValues] = useState(initialFValues);
 
     const [provinces, setProvinces] = useState([])
     const [provinceSelect, setProvinceSelect] = useState('0')
@@ -182,13 +197,24 @@ export default function Payment(){
         setCommuneSelect('0')
     }
 
+    const handleChange = e => {
+        const { name, value } = e.target
+        setValues({
+            ...values,
+            [name]: value
+        })
+        console.log(values)
+    }
+
     const handleChangeCommune = (e) => {
+
         setCommuneSelect(e.target.value)
     }
 
     const [selectedValue, setSelectedValue] = React.useState('');
     
     const handleChangeMethoPay = (e) => {
+        console.log(e)
         setSelectedValue(e.target.value);
     }
 
@@ -221,11 +247,14 @@ export default function Payment(){
                                                 <TextField
                                                     label="Họ tên"
                                                     id="outlined-basic"
+                                                    name="name"
                                                     variant="outlined"
                                                     size="medium"
-                                                
+                                                    value={values.name}
+                                                    onChange={handleChange}
                                                     fullWidth
                                                     placeholder='Nguyễn Văn A'
+                                                    handleChange
                                                 />
                                             </Form.Group>
                                         </Row>
@@ -234,8 +263,11 @@ export default function Payment(){
                                             <TextField
                                                 label="Số điện thoại"
                                                 id="outlined-basic"
+                                                name="phone"
                                                 variant="outlined"
                                                 size="medium"
+                                                value={values.phone}
+                                                onChange={handleChange}
                                                 fullWidth
                                                 placeholder='0999999999'
                                             />
@@ -245,9 +277,11 @@ export default function Payment(){
                                             <TextField
                                                 label="Email"
                                                 id="outlined-basic"
+                                                name="email"
                                                 variant="outlined"
                                                 size="medium"
-
+                                                value={values.email}
+                                                onChange={handleChange}
                                                 fullWidth
                                                 placeholder='abc@gmail.com'
                                             />
@@ -257,8 +291,11 @@ export default function Payment(){
                                             <TextField
                                                 label="Địa chỉ"
                                                 id="outlined-basic"
+                                                name="address"
                                                 variant="outlined"
                                                 size="medium"
+                                                value={values.address}
+                                                onChange={handleChange}
                                                 fullWidth
                                                 placeholder='43 QL91 (Số nhà)'
                                             />
@@ -416,7 +453,7 @@ export default function Payment(){
                     </Col>
                     <Col xs={1}></Col>
                     <Col className = 'right-side' xs={5}>
-                        <Bill method={selectedValue}/>
+                        <Bill method={selectedValue} values = {values}/>
                     </Col>
                 </Row>
                 

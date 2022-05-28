@@ -68,7 +68,7 @@ exports.payment = (request, response) => {
     const req = https.request(options, (res) => {
       res.setEncoding("utf8");
       res.on("data", (body) => {
-        //   console.log(JSON.parse(body));
+          // console.log(JSON.parse(body));
         response.send(JSON.parse(body).payUrl);
       });
       res.on("end", () => {
