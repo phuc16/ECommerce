@@ -48,6 +48,21 @@ function Bill(props) {
             let expires = "expires=" + d.toUTCString();
             document.cookie = i + '=' + values[i] + ';' + expires + ";path=/complete";
         }
+        
+        //Create shipment on GHN
+        console.log("CONNECT TO SERVER");
+        console.log(values);
+        axios
+            .post('http://localhost:5000/ship', {
+              name: values.name,
+              phone: values.phone,
+              address: values.address,
+              itemList: Object.keys(listItem).map((key, index) => {return listItem[key];})
+          })
+            .then((res) => {
+                console.log(res.data);
+            });
+
     }
 
     var total = 0;
