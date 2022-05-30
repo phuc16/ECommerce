@@ -5,8 +5,8 @@ import '../asset/css/header.css'
 
 function GNavbar(){
     return(
-        <Navbar expand="lg" >
-            <Container fluid>
+        <Navbar expand="lg" className='nav-header'>
+            <Container fluid className='con-nav'>
                 <Navbar.Brand href="#"> 
                 {/* <img
                     alt=""
@@ -37,7 +37,7 @@ function GNavbar(){
                     />
                     <Button variant=""><BsSearch/></Button>
                     <Button variant=""><BsCartFill/> Giỏ hàng</Button>
-                    <Button variant=""><FaSignInAlt/> Đăng nhập</Button>
+                    <Button variant="" ><FaSignInAlt/> Đăng nhập</Button>
                 </Form>
                 </Navbar.Collapse>
             </Container>
@@ -47,7 +47,7 @@ function GNavbar(){
 
 export default function GHeader(){
     return(
-        <div>
+        <div className='header'>
             <GNavbar/>
         </div>
     )

@@ -5,6 +5,7 @@ import axios from 'axios';
 import React, { useState, useEffect, useRef} from "react";
 import {TextField } from "@mui/material";
 // import { useNavigate } from "react-router-dom";
+import Footer from './footer';
 
 const initialFValues = {
     name: '',
@@ -92,7 +93,7 @@ function Bill(props) {
     return(
         
         <div className="bill-container">
-            <Container >
+            <Container>
                 <Row className="mb-2 title">
                     <p>ĐƠN HÀNG</p>
                 </Row>
@@ -575,9 +576,9 @@ export default function Payment(){
                         <Bill method={selectedValue} values = {values} shipFee = {shipeFee}/>
                     </Col>
                 </Row>
-                
-            </Container>
             
+            </Container>
+            <Footer/>
             
 
         </div>

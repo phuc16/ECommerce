@@ -4,6 +4,13 @@
     box-sizing: border-box;
 }
 
+.nav-header{
+    width: 100vw;
+}
+
+.con-nav{
+    padding: 0!important;
+}
 .navbar{
     background-color: #C44569;
     color: white!important;

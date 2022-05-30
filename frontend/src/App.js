@@ -2,6 +2,7 @@ import './App.css';
 import Payment from './component/payment';
 import PaymentComplete from './page/payment-complete';
 import PaymentFail from './page/payment-fail';
+
 import {
   BrowserRouter as Router,
   Switch,
