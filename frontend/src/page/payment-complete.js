@@ -4,6 +4,7 @@ import React, { useState, useEffect, useRef} from "react";
 import brand from "../asset/img/Brand.png";
 import axios from 'axios';
 import "../asset/css/paymentComplete.css";
+import Footer from "../component/footer";
 
 function PaymentFail() {
   return (
@@ -27,10 +28,11 @@ function PaymentFail() {
         <Row className="content" style={{ alignItems: "center" }}>
           <img className="brand" src={brand} />
         </Row>
-        <Row className="thank-you">
+        <Row className="thank-you mb-6" style={{marginBottom: '100px'}}>
           <div>LIÊN HỆ BỘ PHẬN CHĂM SÓC KHÁCH HÀNG ĐỂ ĐƯỢC HỖ TRỢ</div>
         </Row>
       </Container>
+      <Footer/>
     </div>
   );
 }
@@ -132,7 +134,7 @@ CẢM ƠN BẠN ĐÃ LUÔN TIN TƯỞNG GIFT SHOP! \n`,
             <Row className="content" style={{ alignItems: "center" }}>
               <img className="brand" src={brand} />
             </Row>
-            <Row className="thank-you">
+            <Row className="thank-you mb-6">
               <div>CẢM ƠN BẠN ĐÃ LUÔN TIN TƯỞNG GIFT SHOP</div>
             </Row>
           </Container>

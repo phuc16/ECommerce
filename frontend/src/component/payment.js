@@ -36,22 +36,22 @@ function Bill(props) {
     const listItem = {
         1: {
             name: 'Sunflower',
-            price: 0,
+            price: 1000,
             size: 'large',
-            amount: 2
+            amount: 1
         },
         2: {
             name: 'Rose',
-            price: 400,
+            price: 2000,
             size: 'medium',
-            amount: 3
+            amount: 2
         }
     }
-
+    console.log(shipFee+total)
     const onPayment = (e) => {
         axios
             .post('http://localhost:5000/momo', {
-              amount: total
+              amount: total + shipFee
           })
             .then((res) => {
                 // navigate(res.data);
@@ -147,7 +147,7 @@ function Bill(props) {
                 </Row>
                 <Row className="mb-4 total">
                     <Col>Tổng Cộng</Col>
-                    <Col>{total - shipFee} VND</Col>
+                    <Col>{total + shipFee} VND</Col>
                 </Row>
                 <Row className="mb-2 btn-row">
                     {
