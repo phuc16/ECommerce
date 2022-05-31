@@ -1,0 +1,74 @@
+.container{
+    margin-top: 3vh;
+}
+
+.container .form-label p{
+    color: #C44569;
+    background-color: #EFEFEF;
+    font-weight: bold;
+    font-size: 1rem;
+    height: 3.5vh;
+    text-align: left;
+}
+
+.delivery .left-side .form-check{
+    text-align: left!important;
+}
+
+.right-side .bill-container{
+    height: 80vh;
+    width: 90%;
+    background-color: #EFEFEF;
+}
+
+.bill-container .title p{
+    color: #C44569;
+    margin-top: 1vh;
+    font-weight: bold;
+}
+
+.bill-container .cart-item .row .col:last-child{
+    text-align: right;
+}
+
+.bill-container .fee .row .col:first-child{
+    font-weight: bold;
+}
+.bill-container .fee .row .col:last-child{
+    text-align: right;
+}
+
+.bill-container .total .col{
+    color: #C44569 ;
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+.bill-container .total .col:last-child{
+    text-align: right;
+}
+
+.bill-container .btn-row{
+    align-items: center;
+}
+.bill-container .btn{
+    color: white;
+    position: relative;
+    background-color: #C44569;
+    border: none;
+    height: 10vh;
+    font-size: 1.5rem;
+    width: 70%;
+    font-weight: bold;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.bill-container .btn:hover{
+    background-color: #C44569;
+    color: white;
+}
+
+.bill-container .btn:active{
+    background-color: #C44569;
+}
