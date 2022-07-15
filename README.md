@@ -10,7 +10,7 @@ Author: Nguyễn Hoàng Minh Châu, Võ Văn Tiến Dũng, Hà Phương Điền,
 
     cd backend
     npm install (to install all dependencies required if necessary)
-    node server
+    node index.js
 
 Server will run at [http://localhost:5000](http://localhost:5000).
 
