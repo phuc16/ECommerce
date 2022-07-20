@@ -5,6 +5,7 @@ import axios from 'axios';
 import React, { useState, useEffect, useRef} from "react";
 import {TextField } from "@mui/material";
 // import { useNavigate } from "react-router-dom";
+import Footer from './footer';
 
 const initialFValues = {
     name: '',
@@ -16,30 +17,43 @@ const initialFValues = {
     province: '',
 }
 
+const feeValues = {
+    from_district_id:1453,
+    service_id:53320,
+    service_type_id:null,
+    to_district_id:0,
+    to_ward_code:"0",
+    height:50,
+    lengt:20,
+    weight:200,
+    width:20,
+    insurance_value:10000,
+    coupon: null
+}
+
 function Bill(props) {
-    const { method, values } = props;
+    const { method, values, shipFee } = props;
     const listItem = {
         1: {
             name: 'Sunflower',
-            price: 0,
+            price: 1000,
             size: 'large',
-            amount: 2
+            amount: 1
         },
         2: {
             name: 'Rose',
-            price: 400,
+            price: 2000,
             size: 'medium',
-            amount: 3
+            amount: 2
         }
     }
-
+    console.log(shipFee+total)
     const onPayment = (e) => {
         axios
             .post('http://localhost:5000/momo', {
-              amount: total
+              amount: total + shipFee
           })
             .then((res) => {
-                console.log(res.data);
                 // navigate(res.data);
                 window.location.replace(res.data);
             });
@@ -79,7 +93,7 @@ function Bill(props) {
     return(
         
         <div className="bill-container">
-            <Container >
+            <Container>
                 <Row className="mb-2 title">
                     <p>ĐƠN HÀNG</p>
                 </Row>
@@ -121,7 +135,7 @@ function Bill(props) {
                     </Row>  
                     <Row className='mb-2'>
                         <Col>Phí vận chuyển</Col>
-                        <Col>0 VND</Col>
+                        <Col>{shipFee} VND</Col>
                     </Row> 
                     <Row className='mb-2'>
                         <Col>Phí thanh toán</Col>
@@ -133,7 +147,7 @@ function Bill(props) {
                 </Row>
                 <Row className="mb-4 total">
                     <Col>Tổng Cộng</Col>
-                    <Col>{total} VND</Col>
+                    <Col>{total + shipFee} VND</Col>
                 </Row>
                 <Row className="mb-2 btn-row">
                     {
@@ -172,31 +186,51 @@ export default function Payment(){
     const [communes, setCommunes] = useState([])
     const [communeSelect, setCommuneSelect] = useState(0)
 
+    const [selectedValue, setSelectedValue] = useState('');
+    const [shipeFee, setShipFee] = useState(0);
+    
+
     useEffect(() => {
         const fetAPIProvince = async () => {
             const url = 'https://dev-online-gateway.ghn.vn/shiip/public-api/master-data/province';
             const tokenS = 'db9cc4ff-de42-11ec-ac64-422c37c6de1b'
             axios.get(url, { headers: { token: tokenS} }).then(res => {
+      
                 setProvinces(res.data.data)
             })
             if (provinceSelect !== 0) {
                 var urlD = `https://dev-online-gateway.ghn.vn/shiip/public-api/master-data/district?province_id=${provinceSelect}`
-                console.log(provinceSelect)
                 await axios.get(urlD, { headers: { token: tokenS} }).then(res => {
-                    
-                    setDistricts(res.data.data)  
-                    
+                    setDistricts(res.data.data)   
                 })
             }
             if (districtSelect !== 0) {
                 var urlC = `https://dev-online-gateway.ghn.vn/shiip/public-api/master-data/ward?district_id=${districtSelect}`
                 await axios.get(urlC, { headers: {token: tokenS}}).then(res => {
+
                     setCommunes(res.data.data)
-                    console.log(res.data.data)
+                    
                 })
             }
         }
+        const fetAPIService = async () => {
+            const urlS = `https://dev-online-gateway.ghn.vn/shiip/public-api/v2/shipping-order/available-services`
+            const tokenS = 'db9cc4ff-de42-11ec-ac64-422c37c6de1b'
+            const headerInfo = {
+                'Content-Type': 'application/json',
+                'token': tokenS
+            }
+            await axios.post(urlS, { 
+                shop_id:113996,
+                from_district: 1453,
+                to_district: 1454
+            }, {headers : headerInfo})
+            .then(res => {
+                console.log(res)
+            })
+        }
         fetAPIProvince()
+        fetAPIService()
     }, [])
 
     const handleChangeProvince = async (e) => {
@@ -216,11 +250,11 @@ export default function Payment(){
     }
 
     const handleChangeDistrict = async (e) => {
-        values.dist = e.target.value;
+        values.dist = e.target.value
+        feeValues.to_district_id = parseInt(e.target.value) 
         const tokenS = 'db9cc4ff-de42-11ec-ac64-422c37c6de1b'
         
         setDistrictSelect(e.target.value)
-        console.log('1' + districtSelect)
         if (e.target.value === 0) {
             setCommunes([])
         } else {
@@ -240,15 +274,67 @@ export default function Payment(){
         console.log(values)
     }
 
-    const handleChangeCommune = (e) => {
+    const handleChangeCommune = async (e) => {
         values.ward = e.target.value;
+        feeValues.to_ward_code = e.target.value
         setCommuneSelect(e.target.value)
+        var tempSerID = []
+
+        const urlS = `https://dev-online-gateway.ghn.vn/shiip/public-api/v2/shipping-order/available-services`
+        const tokenS = 'db9cc4ff-de42-11ec-ac64-422c37c6de1b'
+        const headerInfo = {
+            'Content-Type': 'application/json',
+            'token': tokenS
+        }
+        await axios.post(urlS, { 
+            shop_id:113996,
+            from_district: 1453,
+            to_district: feeValues.to_district_id
+        }, {headers : headerInfo})
+        .then(res => {
+            tempSerID = res.data.data
+            console.log(tempSerID)
+        })
+
+
+
+        const urlF = `https://dev-online-gateway.ghn.vn/shiip/public-api/v2/shipping-order/fee`
+        const headerInfoF = {
+            'Content-Type': 'application/json',
+            'token': tokenS,
+            'shop_id': 113996
+        }
+
+        
+        await axios.post(urlF, { 
+            from_district_id:1453,
+            service_id:tempSerID[0]['service_id'],
+            service_type_id:null,
+            to_district_id:feeValues.to_district_id,
+            to_ward_code:feeValues.to_ward_code,
+            height:50,
+            lengt:20,
+            weight:200,
+            width:20,
+            insurance_value:10000,
+            coupon: null
+        }, {headers : headerInfoF})
+        .then(res => {
+            setShipFee(res.data.data.total)
+        })
+        .catch(err => {
+            if (err.response.data.code == 400){
+                alert("Hiện tại chưa có dịch vụ giao hàng đến khu vực này, mong quý khách thông cảm")
+            }
+            else {
+                alert("Undefined Error")
+            }
+        })
+
     }
 
-    const [selectedValue, setSelectedValue] = React.useState('');
     
     const handleChangeMethoPay = (e) => {
-        console.log(e)
         setSelectedValue(e.target.value);
     }
 
@@ -487,12 +573,12 @@ export default function Payment(){
                     </Col>
                     <Col xs={1}></Col>
                     <Col className = 'right-side' xs={5}>
-                        <Bill method={selectedValue} values = {values}/>
+                        <Bill method={selectedValue} values = {values} shipFee = {shipeFee}/>
                     </Col>
                 </Row>
-                
-            </Container>
             
+            </Container>
+            <Footer/>
             
 
         </div>

@@ -2,6 +2,7 @@ import GHeader from "../component/header"
 import {Container, Row, Col, Form, Button, ListGroup} from 'react-bootstrap'
 import brand from '../asset/img/Brand.png'
 import '../asset/css/paymentComplete.css'
+import Footer from "../component/footer";
 export default function PaymentFail(){
     return(
         <div>
@@ -24,10 +25,11 @@ export default function PaymentFail(){
                 <Row className="content" style={{alignItems: 'center'}}>
                     <img className="brand" src={brand}/>
                 </Row>
-                <Row className="thank-you" >
+                <Row className="thank-you mb-10" style={{marginBottom: '100px'}} >
                     <div>LIÊN HỆ BỘ PHẬN CHĂM SÓC KHÁCH HÀNG ĐỂ ĐƯỢC HỖ TRỢ</div>
                 </Row>
             </Container>
+            <Footer/>
         </div>
     )
 }
