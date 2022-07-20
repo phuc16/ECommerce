@@ -1,0 +1,26 @@
+version: '3.7'
+
+services:
+  react-docker:
+    container_name: react-docker
+    build:
+      context: /frontend/.
+      dockerfile: Dockerfile
+    command: npm start
+    volumes:
+      - '.:/app'
+      - '/app/node_modules'
+    ports:
+      - 3000:3000
+
+  node-docker:
+    container_name: node-docker
+    build:
+      context: /backend/.
+      dockerfile: Dockerfile
+    command: node index.js
+    volumes:
+      - '.:/app'
+      - '/app/node_modules'
+    ports:
+      - 5000:5000
