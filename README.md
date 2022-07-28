@@ -1,5 +1,5 @@
 # ECOMMERCE
-ECommerce (CO3027)-DH_HK212 assignment project
+ECommerce (CO3027)-DH_HK212 Assignment project
 
 
 Author: Nguyễn Hoàng Minh Châu, Võ Văn Tiến Dũng, Hà Phương Điền, Lê Viết Hòa, Nguyễn Hoàng Nhật, Trương Hoàng Phúc.
