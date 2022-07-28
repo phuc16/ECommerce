@@ -1,12 +1,12 @@
 # ECOMMERCE
-ECommerce (CO3027)-DH_HK212 Assignment project
+ECommerce (CO3027)-DH_HK212 assignment project
 
 
 Author: Nguyễn Hoàng Minh Châu, Võ Văn Tiến Dũng, Hà Phương Điền, Lê Viết Hòa, Nguyễn Hoàng Nhật, Trương Hoàng Phúc.
 
 ## Instruction
 
-### Run server
+### Run the server
 
     cd backend
     npm install (to install all dependencies required if necessary)
@@ -14,7 +14,7 @@ Author: Nguyễn Hoàng Minh Châu, Võ Văn Tiến Dũng, Hà Phương Điền,
 
 Server will run at [http://localhost:5000](http://localhost:5000).
 
-### Run app
+### Run the app
 
     cd frontend
     npm install (to install all dependencies required if necessary)
