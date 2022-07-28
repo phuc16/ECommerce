@@ -6,7 +6,7 @@ Author: Nguyễn Hoàng Minh Châu, Võ Văn Tiến Dũng, Hà Phương Điền,
 
 ## Instruction
 
-### Run the server
+### Run server
 
     cd backend
     npm install (to install all dependencies required if necessary)
@@ -14,7 +14,7 @@ Author: Nguyễn Hoàng Minh Châu, Võ Văn Tiến Dũng, Hà Phương Điền,
 
 Server will run at [http://localhost:5000](http://localhost:5000).
 
-### Run the app
+### Run app
 
     cd frontend
     npm install (to install all dependencies required if necessary)
